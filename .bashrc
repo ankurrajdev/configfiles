@@ -1,0 +1,31 @@
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+eval "$(pyenv virtualenv-init -)"
+
+
+alias update='sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade'
+alias gs="git status"
+alias ga="git add"
+alias gcm="git commit -m"
+alias gcam="git commit -am"
+alias gcb="git checkout -b"
+alias gl="git log --oneline --graph --decorate"
+alias tmux="tmux -2"
+alias vi="nvim"
+
+function _update_ps1() {
+    PS1=$(powerline-shell $?)
+}
+
+if [[ $TERM != linux && ! $PROMPT_COMMAND =~ _update_ps1 ]]; then
+    PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+fi
+. /usr/local/bin/virtualenvwrapper.sh
+WORKON_HOME=~/.virtualenvs
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_password.txt
